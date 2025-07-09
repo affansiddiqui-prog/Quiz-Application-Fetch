@@ -1,8 +1,10 @@
 let i = 0;
 let data = [];
-let userScore = 0
+let userScore = 0;
 let quiz = document.getElementById('quiz');
 let score = document.getElementById('score');
+let nextBtn = document.getElementById('nextBtn');
+let correctAnswer = '';
 
 fetch('https://the-trivia-api.com/v2/questions')
   .then(data => data.json())
@@ -11,16 +13,48 @@ fetch('https://the-trivia-api.com/v2/questions')
     show();
   });
 
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
 function show() {
+  nextBtn.disabled = true;
+
   if (i >= data.length) {
     quiz.innerHTML = `<h2>Quiz Finished</h2>`;
-    score.innerHTML = `Your score is ${userScore} / ${data.length}`
-    
+    score.innerHTML = `<center>Your score is ${userScore} / ${data.length}</center>`;
+    nextBtn.style.display = "none";
     return;
   }
 
-  let q = data[i++];
-  let opts = [...q.incorrectAnswers, q.correctAnswer];
+  let q = data[i];
+  correctAnswer = q.correctAnswer;
+  let opts = shuffle([...q.incorrectAnswers, q.correctAnswer]);
 
-  quiz.innerHTML = `<h2>Q${i}: ${q.question.text}</h2>` + opts.map(opt => `<input type ="radio" name="" id="" onclick="show()"><label for="">${opt}</label>`).join('');
+  quiz.innerHTML = `
+    <h2>Q${i + 1}: ${q.question.text}</h2>
+    <div class="options">
+      ${opts.map(opt => `
+        <label>
+          <input type="radio" name="option" value="${opt}" onclick="enableNext('${opt}')">
+          ${opt}
+        </label>`).join('')}
+    </div>
+  `;
+}
+
+function enableNext(selected) {
+  nextBtn.disabled = false;
+  nextBtn.dataset.selected = selected;
+}
+
+function nextQuestion() {
+  let selected = nextBtn.dataset.selected;
+
+  if (selected === correctAnswer) {
+    userScore++;
+  }
+
+  i++;
+  show();
 }

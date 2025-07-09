@@ -5,13 +5,108 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz Application</title>
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #e0eafc, #cfdef3);
+  margin: 0;
+  padding: 0;
+}
 
+.container {
+  width: 90%;
+  max-width: 420px;
+  margin: 60px auto;
+  background: #ffffff;
+  padding: 25px 20px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #2c3e50;
+  margin-top: 100px;
+  text-align: center;
+}
+
+.quiz-box h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #34495e;
+}
+
+.options label {
+  display: block;
+  padding: 14px 20px;
+  margin: 12px auto;
+  border: 2px solid #ddd;
+  width: 80%;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #fafafa;
+  font-size: 16px;
+  color: #333;
+  text-align: left;
+}
+
+.options input[type="radio"] {
+  margin-right: 10px;
+}
+
+.options label:hover {
+  background-color: #e0f0ff;
+  border-color: #007bff;
+  transform: scale(1.02);
+}
+
+#nextBtn {
+  padding: 14px 30px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  transition: background 0.3s ease, transform 0.2s;
+}
+
+#nextBtn:hover:enabled {
+  background-color: #0056d2;
+  transform: scale(1.05);
+}
+
+#nextBtn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.score-box {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 30px;
+  color: #2d3436;
+}
+
+</style>
 </head>
 <body>
     <h1>Quiz Application</h1>
-    <div id="quiz"></div>
-    <div id="score"></div>
-  
+     <div id="quiz" class="quiz-box">
+      <h2>Loading...</h2>
+    </div>
+    <div id="score" class="score-box"></div>
+    <button id="nextBtn" onclick="nextQuestion()" disabled>Next</button>
+  </div>
    
   <script src="app.js"></script> 
 </body>
